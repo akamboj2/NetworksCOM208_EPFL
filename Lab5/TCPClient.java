@@ -44,11 +44,21 @@ public class TCPClient{
         printMap(occurrences);
     }
     */
-    public static void main(String args[]){
+    public static void main(String args[]) throws Exception{
+        //start the TCP Server first!
         Socket s = new Socket("localhost",6789);
-        DataOutputStream d = new DataOutputStream(s.getOutputStream());
-        d.writeUTF("Hello");
-
-
+        DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+        DataInputStream din;
+        dout.writeUTF("Hello SERVER!");
+        //dout.flush();
+        din = new DataInputStream(s.getInputStream());
+        System.out.println("servers's reponse:"+din.readUTF());
+        dout.writeUTF("Not flushing dout buffer...");
+        s.close();
     }
 }
+
+/* recall to run java
+* compile: javac file.java
+* execute: java file
+*/
